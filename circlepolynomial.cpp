@@ -4,42 +4,42 @@
 #include<math.h>
 #include<dos.h>
 using namespace std;
-void points(int xc, int yc, int x, int y)
+void octantplot(int xcenter,int ycenter,int xpresent,int ypresent)
 {
-putpixel(xc+x,yc+y,15);
-putpixel(xc-x,yc+y,15);
-putpixel(xc+x,yc-y,15);
-putpixel(xc-x,yc-y,15);
-putpixel(xc+y,yc+x,15);
-putpixel(xc-y,yc+x,15);
-putpixel(xc+y,yc-x,15);
-putpixel(xc-y,yc-x,15);
-}
-void poly(int xc, int yc, int r)
+	putpixel(xcenter+xpresent,ycenter+ypresent,WHITE);
+	putpixel(xcenter-xpresent,ycenter+ypresent,WHITE);
+	putpixel(xcenter+xpresent,ycenter-ypresent,WHITE);
+	putpixel(xcenter-xpresent,ycenter-ypresent,WHITE);
+	putpixel(xcenter+ypresent,ycenter+xpresent,WHITE);
+	putpixel(xcenter-ypresent,ycenter+xpresent,WHITE);
+	putpixel(xcenter+ypresent,ycenter-xpresent,WHITE);
+	putpixel(xcenter-ypresent,ycenter-xpresent,WHITE);
+   }
+void polynomialcircle(int xcenter,int ycenter,int radius)
 {
-int x=0, y=r;
-float z= (r/1.414);
-while(x<=z)
+int xpresent=0, ypresent=radius;
+while(xpresent<=radius/1.414)
 {
-y=sqrt((r*r)-(x*x));
-points(xc,yc,x,y);
-x++;
+ypresent=sqrt((radius*radius)-(xpresent*xpresent));
+octantplot(xcenter,ycenter,xpresent,ypresent);
+xpresent++;
 }
 }
+
 
 int main()
 {
-	int gd=DETECT,gm,a,b,c;
+int gd=DETECT,gmode,a,b,c;
+float T,r;
+initgraph(&gd,&gmode,"");
+cout<<"centre x coordinate ::";
+cin>>a;
+cout<<"centre y coordinate ::";
+cin>>b;
+cout<<"radius:";
+cin>>c;
+outtextxy(a-r/2,b+c+5,"CIRCLE");
+polynomialcircle(a,b,c);
+getch();
 
-initgraph(&gd,&gm," ");
-cout<<"enter coordinates"<<endl;
-	cout<<"X: ";
-	cin>>a;
-	cout<<"y: ";
-	cin>>b;
-	cout<<"enter radius ";
-	cin>>c;
-
-	poly(a,b,c);
-	getch();
-	}
+}
