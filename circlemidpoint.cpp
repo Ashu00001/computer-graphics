@@ -4,54 +4,56 @@
 #include<math.h>
 #include<dos.h>
 using namespace std;
-void octantplot(int xc,int yc,int x,int y)
+void octantplot(int xcenter,int ycenter,int xpresent,int ypresent)
 {
-	putpixel(xc+x,yc+y,15);
-	putpixel(xc-x,yc+y,15);
-	putpixel(xc+x,yc-y,15);
-	putpixel(xc-x,yc-y,15);
-	putpixel(xc+y,yc+x,15);
-	putpixel(xc-y,yc+x,15);
-	putpixel(xc+y,yc-x,15);
-	putpixel(xc-y,yc-x,15);
+	putpixel(xcenter+xpresent,ycenter+ypresent,WHITE);
+	putpixel(xcenter-xpresent,ycenter+ypresent,WHITE);
+	putpixel(xcenter+xpresent,ycenter-ypresent,WHITE);
+	putpixel(xcenter-xpresent,ycenter-ypresent,WHITE);
+	putpixel(xcenter+ypresent,ycenter+xpresent,WHITE);
+	putpixel(xcenter-ypresent,ycenter+xpresent,WHITE);
+	putpixel(xcenter+ypresent,ycenter-xpresent,WHITE);
+	putpixel(xcenter-ypresent,ycenter-xpresent,WHITE);
    }
-void midpointcircle(int xc,int yc,int r)
+void midpointcircle(int xcenter,int ycenter,int radius)
 {
-	int x=0,y=r;
-	int p=(1-r);
-	octantplot(xc,yc,x,y);
-	while(x<y)
+	int xpresent=0,ypresent=radius;
+
+	int pdec=(1-radius);
+	octantplot(xcenter,ycenter,xpresent,ypresent);
+	while(xpresent<ypresent)
 	{
-		x++;
-		if(p<0){
+		xpresent++;
+		if(pdec<0){
 		
-		p=p+2*x*1;
+		pdec=pdec+2*xpresent*1;
 		
 	}
 		else
 		{
-			y--;
-			p=p-2*y+2*x+1;
+			ypresent--;
+			pdec=pdec-2*ypresent+2*xpresent+1;
 			}
-		octantplot(xc,yc,x,y);	
+		octantplot(xcenter,ycenter,xpresent,ypresent);	
 		 
 		 }
 
 	}
 
+
 int main()
 {
-	int gd=DETECT,gm,a,b,c;
+int gd=DETECT,gmode,a,b,c;
+float T,r;
+initgraph(&gd,&gmode,"");
+cout<<"centre x coordinate ::";
+cin>>a;
+cout<<"centre y coordinate ::";
+cin>>b;
+cout<<"radius:";
+cin>>c;
+outtextxy(a-r/2,b+c+5,"CIRCLE");
+midpointcircle(a,b,c);
+getch();
 
-initgraph(&gd,&gm," ");
-	cout<<"Enter centre coordinates"<<endl;
-	cout<<"x: ";
-	cin>>a;
-	cout<<"y: ";
-	cin>>b;
-	cout<<"enter radius: ";
-	cin>>c;
-
-	midpointcircle(a,b,c);
-	getch();
-	}
+}
